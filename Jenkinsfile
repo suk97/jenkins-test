@@ -1,5 +1,7 @@
 pipeline {
     agent any 	// 사용 가능한 에이전트에서 이 파이프라인 또는 해당 단계를 실행
+    tools {nodejs "nodejs"} // npm 명령어 사용을 위한 nodejs
+
 
     stages {
         stage('Prepare') {
