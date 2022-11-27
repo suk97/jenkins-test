@@ -111,8 +111,8 @@ pipeline {
                     steps{
                         echo 'SSH'
 
-                        sshagent (credentials: ['jenkins-server-private-key']) {
-//                              sh "eval ${ssh-agent -s}"
+                        sshagent (credentials: ['jenkins-server-privatekey']) {
+                             sh "eval ${ssh-agent -s}"
                              sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker pull suk97/react-deploy'"
                              sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker ps -q --filter name=react-deploy | grep -q . && docker rm -f \$(docker ps -aq --filter name=react-deploy)'"
                              sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name react-deploy -p 8080:8080 suk97/react-deploy'"
