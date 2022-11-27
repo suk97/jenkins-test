@@ -1,6 +1,12 @@
-FROM node:alpine
-WORKDIR "/usr/src/app"
-COPY package.json ./
-RUN npm install
-COPY ./ ./
-CMD ["npm","run","start"]
+FROM node:12.2.0-alpine
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json /app/package.json
+RUN npm install 
+
+CMD ["npm", "start"]
+
+EXPOSE 8080
