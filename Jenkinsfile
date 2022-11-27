@@ -4,9 +4,9 @@ pipeline {
     stages {
         stage('Prepare') {
             steps {
-                git url: 'https://github.com/carrybomb/LIS.git',
+                git url: 'https://github.com/suk97/jenkins-test.git',
                     branch: 'main',
-                    credentialsId: '3282fc49-a981-4f31-aec7-cc80b9e02577'
+                    credentialsId: 'jenkins-git-credential'
             }
 
             post {
@@ -22,27 +22,24 @@ pipeline {
         stage('Build') {
             steps {
             	// gradlew이 있어야됨. git clone해서 project를 가져옴.
-                sh 'chmod +x gradlew'
-                sh  './gradlew clean build'
-
-
-                sh 'ls -al ./build'
+                sh "npm install"
+                sh "npm run build"
             }
             post {
                 success {
-                    echo 'gradle build success'
+                    echo 'react build success'
                 }
 
                 failure {
-                    echo 'gradle build failed'
+                    echo 'react build failed'
                 }
             }
         }
-        stage('Test') {
-            steps {
-                echo  '테스트 단계와 관련된 몇 가지 단계를 수행합니다.'
-            }
-        }
+// stage('Test') {
+//     steps {
+//         echo  '테스트 단계와 관련된 몇 가지 단계를 수행합니다.'
+//     }
+// }
 //         stage('Docker Rm') {
 //             steps {
 //                 sh 'echo "Docker Rm Start"'
@@ -66,7 +63,7 @@ pipeline {
         stage('Dockerizing'){
             steps{
                 sh 'echo " Image Bulid Start"'
-                sh 'docker build . -t suk97/deploy'
+                sh 'docker build . -t suk97/react-deploy'
             }
             post {
                 success {
@@ -85,7 +82,7 @@ pipeline {
                     script {
                         docker.withRegistry('https://registry.hub.docker.com', 'docker'){
                             sh 'docker login -u "suk97" -p "ehddnr0511@" docker.io'
-                            sh 'docker push suk97/deploy'
+                            sh 'docker push suk97/react-deploy'
                         }
                     }
             }
@@ -114,9 +111,9 @@ pipeline {
 
                         sshagent (credentials: ['35.78.53.64-ssh']) {
 //                              sh "eval ${ssh-agent -s}"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker pull suk97/deploy'"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker ps -q --filter name=deploy | grep -q . && docker rm -f \$(docker ps -aq --filter name=deploy)'"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name deploy -p 8080:8080 suk97/deploy'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker pull suk97/react-deploy'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker ps -q --filter name=react-deploy | grep -q . && docker rm -f \$(docker ps -aq --filter name=react-deploy)'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name react-deploy -p 8080:8080 suk97/react-deploy'"
                         }
 
                     }

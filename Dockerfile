@@ -1,6 +1,6 @@
-FROM openjdk:11
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
-EXPOSE 8080
-EXPOSE 3306
+FROM node:alpine
+WORKDIR "/usr/src/app"
+COPY package.json ./
+RUN npm install
+COPY ./ ./
+CMD ["npm","run","start"]
