@@ -113,8 +113,9 @@ pipeline {
                         sshagent (credentials: ['jenkins-server-privatekey']) {
                             //  sh "eval ${ssh-agent -s}"
                              sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker pull suk97/react-deploy'"
-                            //  sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker ps -q --filter name=react-deploy | grep -q . && docker rm -f \$(docker ps -aq --filter name=react-deploy)'"
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name react-deploy -p 8080:8080 suk97/react-deploy'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker ps -q --filter name=react-deploy | grep -q . && docker rm -f \$(docker ps -aq --filter name=react-deploy)'"
+                            // 처음 실행할 땐 주석하기
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name react-deploy -p 8081:8081 suk97/react-deploy'"
                         }
 
                     }
