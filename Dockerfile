@@ -1,10 +1,12 @@
 FROM node:12.2.0-alpine
 
-WORKDIR /home/ubuntu
+WORKDIR /app
 
-COPY package.json ./
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json /app/package.json
 RUN npm install 
 
 CMD ["npm", "start"]
 
-EXPOSE 8080
+EXPOSE 3000
