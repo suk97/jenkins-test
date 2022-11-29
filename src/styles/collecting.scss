@@ -1,0 +1,247 @@
+$Blue: #3C9DF6;
+
+.collecting-wrap {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+
+  .max-wrap {
+    width: 100%;
+    max-width: 96.5%;
+    margin: 0 auto;
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      margin-top: 1em;
+      padding-bottom: 0.8em;
+      border-bottom: 1px solid #ccc;
+
+      h2 {
+        font-size: 20px;
+        margin-left: 0.5em;
+
+        span {
+          font-size: 16px;
+          color: $Blue;
+          margin-left: 0.5em;
+        }
+      }
+    }
+
+    .main-content {
+      display: flex;
+    }
+
+    .content-title {
+      display: flex;
+      padding: 0.5rem;
+    }
+
+    .left {
+      margin-top: 1rem;
+      margin-right: 0.5rem;
+      border: 0.7px solid black;
+      border-radius: 0.5rem;
+      width: 28vw;
+      height: 20vh;
+
+      .input-form {
+        margin-top: 3rem;
+        margin-left: 3rem;
+
+        .patientBtn {
+          width : 5rem;
+          margin-left: 1rem;
+        }
+
+        .patientNo-input {
+          width : 15rem;
+          margin-left : 1rem;
+        }
+      }
+
+      .visit-btn {
+        background-color: #c6c9cc;
+        cursor: hand;
+      }
+
+      .visit-dt {
+        width: 5rem;
+      }
+
+      .visit-table {
+        margin-top: 2.3rem;
+        margin-left: 5rem;
+      }
+
+    }
+
+    .right {
+      margin-top: 1rem;
+      margin-left: 0.5rem;
+      border: 0.7px solid black;
+      border-radius: 0.5rem;
+      width: 50vw;
+      height: 20vh;
+
+      .patient-info {
+        margin-top : 2rem;
+        margin-left : 4rem;
+      }
+
+      .first {
+        width: 3rem;
+      }
+
+      .first-result {
+        width: 3rem;
+      }
+
+      .second {
+        width: 4rem;
+      }
+
+      .second-result {
+        width: 9rem;
+      }
+
+      .third {
+        width: 4rem;
+      }
+
+      .third-result {
+        width: 10rem;
+      }
+
+      .address-result {
+        width: 30rem;
+      }
+    }
+
+    .patient-comming {
+      height: 50vh;
+
+      .comming-table {
+        width: 5rem;
+        text-align: center;
+      }
+    }
+
+    .patient-order {
+      overflow: unset;
+      height: 50vh;
+
+      .buttons {
+        position: relative;
+        left: 30rem;
+        top: 3rem;
+      }
+
+      .collecting-button {
+        margin: 5px;
+        width: 5rem;
+      }
+
+      .prescribe-table {
+        margin-top: 1rem;
+        display: inline-block;
+        margin-left: 1rem;
+
+      }
+
+        .prescribeInfo-table {
+          display: flex;
+
+          li {
+            width: 4rem;
+            text-align: center;
+          }
+
+          .blank {
+            width: 2rem;
+            height: 1.1rem;
+            align-items: center;
+          }
+
+          .date {
+            width: 5rem;
+          }
+
+          .fl {
+            border-top: none;
+          }
+      }
+
+    }
+
+  }
+
+  .table-title {
+    background-color: #E4E7EB;
+    height: 17px;
+  }
+
+  .content-title {
+    margin-left: 0.3rem;
+    border-bottom: 1px black solid;
+  }
+
+  ul {
+    //width: 100%;
+    //height: 100%;
+    //border : 5px solid red;
+  }
+
+  li {
+    float: left;
+    border-right: 0.5px solid #BCC0C8;
+    border-bottom: 1px solid #BCC0C8;
+    list-style: none;
+    font-size: 15px;
+    padding-top: 1px;
+    padding-top: 1px;
+  }
+
+  .fl {
+    float: left;
+  }
+
+
+  .patient-table {
+    display: flex;
+    width: 33rem;
+  }
+
+  .table {
+    margin-top: 1rem;
+    display: inline-block;
+    border-left : 1px solid #BCC0C8;
+    border-top : 1px solid #BCC0C8;
+    font-family: "Malgun Gothic", "맑은 고딕", AppleSDGothicNeo-Light, sans-serif;
+    color:#4e545f;
+    font-weight: bold;
+  }
+
+  .rg-root{
+    border : none;
+    background : #FBFAFA;
+    margin-left : 4rem;
+    margin-top : 2.3rem;
+    margin-bottom: 0;
+    font-size : 15px;
+
+  }
+  .rg-header {
+    border-top : 1px solid #BCC0C8;
+    border-bottom : 1px solid #BCC0C8;
+  }
+
+  .rg-body {
+    background-color: #FBFAFA;
+  }
+  .buttons {
+    position: absolute;
+    //left: 10rem;
+  }
+}
