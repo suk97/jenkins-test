@@ -117,7 +117,7 @@ pipeline {
                             //  sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker ps -q --filter name=react-deploy | grep -q . && sudo docker rm -f \$(docker ps -aq --filter name=react-deploy)'"
                              sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker rm -f react-deploy'"
                             // 처음 실행할 땐 주석하기
-                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name react-deploy -p 3000:3000 suk97/react-deploy'"
+                             sh "ssh -o StrictHostKeyChecking=no ubuntu@35.78.53.64 'sudo docker run -d --name react-deploy -p 5000:5000 suk97/react-deploy'"
                         }
 
                     }
