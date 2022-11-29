@@ -21,21 +21,21 @@ pipeline {
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         sh "npm install"
-        //         sh "npm run build"
-        //     }
-        //     post {
-        //         success {
-        //             echo 'react build success'
-        //         }
+        stage('Build') {
+            steps {
+                sh "npm install"
+                sh "npm run build"
+            }
+            post {
+                success {
+                    echo 'react build success'
+                }
 
-        //         failure {
-        //             echo 'react build failed'
-        //         }
-        //     }
-        // }
+                failure {
+                    echo 'react build failed'
+                }
+            }
+        }
 // stage('Test') {
 //     steps {
 //         echo  '테스트 단계와 관련된 몇 가지 단계를 수행합니다.'
