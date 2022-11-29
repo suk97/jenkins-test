@@ -3,7 +3,7 @@ import React from 'react';
 function test () {
 
     return (
-        <div>higgi</div>
+        <div>highhgi</div>
     );
 }
 
