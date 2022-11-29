@@ -23,7 +23,6 @@ pipeline {
 
         stage('Build') {
             steps {
-            	// gradlew이 있어야됨. git clone해서 project를 가져옴.
                 sh "npm install"
                 sh "npm run build"
             }
