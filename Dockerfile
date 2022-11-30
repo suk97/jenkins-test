@@ -2,13 +2,15 @@
 FROM    node:16-alpine
 
 # 2. 패키지 우선 복사
-COPY    ./package* /usr/src/app/
+COPY    ./package* /usr/src/app
 WORKDIR /usr/src/app
 
 # 3. 소스 복사
-COPY . .
+COPY . /usr/src/app
 
 RUN npm install
+
+RUN node --max_old_space_size=4096 ./node_modules/.bin/react-scripts build
 
 RUN npm run build
 
