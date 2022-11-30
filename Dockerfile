@@ -19,17 +19,21 @@
 # ENTRYPOINT ["serve", "-s", "build"]
 
 
-# Base 이미지
-FROM node:16-alpine
-
-# 빌드된 산출물을 실행시키기 위해 필요한 serve 모듈
-RUN npm install -g serve
+#build phase
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package.json .
 RUN npm install
+COPY . .
 RUN npm run build
 
-# 빌드된 산출물 도커 이미지로 복사
-RUN mkdir ./build
-COPY ./build ./build
+# run phase
+FROM nginx
+# build 폴더 복사 , 다른 phase 에서 가져옴
+# nginx port 
+EXPOSE 80
+# from , destination
+COPY --from=builder /app/build /usr/share/nginx/html
+#start 는 디폴트
 
-# 실행 명령어
-ENTRYPOINT ["serve", "-s", "build"]
+# ENTRYPOINT ["serve", "-s", "build"]
