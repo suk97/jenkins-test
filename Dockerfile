@@ -28,6 +28,7 @@ RUN npm install -g serve
 # 작업 공간
 RUN mkdir /app
 WORKDIR /app
+COPY ./package* /app
 
 RUN npm install
 RUN npm run build
