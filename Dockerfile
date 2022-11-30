@@ -29,6 +29,8 @@ RUN npm install -g serve
 RUN mkdir /app
 WORKDIR /app
 
+RUN npm run build
+
 # 빌드된 산출물 도커 이미지로 복사
 RUN mkdir ./build
 COPY ./build ./build
