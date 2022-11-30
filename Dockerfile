@@ -24,12 +24,6 @@ FROM node:16-alpine
 
 # 빌드된 산출물을 실행시키기 위해 필요한 serve 모듈
 RUN npm install -g serve
-
-# 작업 공간
-RUN mkdir /app
-WORKDIR /app
-COPY    ./package* /app/
-
 RUN npm install
 RUN npm run build
 
