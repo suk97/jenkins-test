@@ -37,6 +37,7 @@ pipeline {
                 }
             }
         }
+    }
 // stage('Test') {
 //     steps {
 //         echo  '테스트 단계와 관련된 몇 가지 단계를 수행합니다.'
