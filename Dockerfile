@@ -13,4 +13,4 @@ RUN npm install -g serve
 
 # 4. WEB 서버 실행 (Listen 포트 정의)
 EXPOSE 3000
-ENTRYPOINT ["serve", "-s", "build"]
+ENTRYPOINT ["npx", "serve", "-s", "build"]
