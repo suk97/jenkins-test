@@ -20,6 +20,21 @@ pipeline {
                 }
             }
         }
+        stage('build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+
+            post {
+                success {
+                    sh 'echo "Successfully Cloned Repository"'
+                }
+                failure {
+                    sh 'echo "Fail Cloned Repository"'
+                }
+            }
+        }
         
 // stage('Test') {
 //     steps {
