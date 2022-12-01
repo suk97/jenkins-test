@@ -1,33 +1,48 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
-const SearchForm = ({ onSubmit, setDate }) => {
+const SearchForm = ({ onSubmit }) => {
     const [query, setQuery] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    // new Date().toISOString().slice(0, 10)
+    const [radioDate, setRadioDate] = useState('');
 
-    const onChangeStartDate = (e) => {
-        if (e.target.value <= endDate) {
-            setStartDate(e.target.value);
-        }
-    };
-
-    const onChangeEndDate = (e) => {
-        if (e.target.value <= new Date().toISOString().slice(0, 10)) {
-            setEndDate(e.target.value);
-        }
-    };
-
-    const onQueryChange = useCallback(
+    const onChangeStartDate = useCallback(
         (e) => {
-            setQuery(e.target.value);
+            if ('0000-00-00' <= e.target.value && e.target.value <= endDate) {
+                setStartDate(e.target.value);
+            }
         },
-        []
+        [endDate],
     );
+
+    const onChangeEndDate = useCallback(
+        (e) => {
+            if (
+                startDate <= e.target.value &&
+                e.target.value <= new Date().toISOString().slice(0, 10)
+            ) {
+                setEndDate(e.target.value);
+            }
+        },
+        [startDate],
+    );
+
+    const onChangeRegisterDate = (e) => {
+        setRadioDate(e.target.value);
+    };
+    console.log(radioDate);
+
+    useEffect(() => {
+        setRadioDate('registerDate');
+    }, []);
+
+    const onQueryChange = useCallback((e) => {
+        setQuery(e.target.value);
+    }, []);
 
     const SearchButtonClick = useCallback(() => {
         if (!query) {
@@ -42,9 +57,9 @@ const SearchForm = ({ onSubmit, setDate }) => {
             });
             return;
         }
-        onSubmit(query, startDate, endDate);
+        onSubmit(query, startDate, endDate, radioDate);
         setQuery('');
-    }, [onSubmit, query, startDate, endDate]);
+    }, [onSubmit, query, startDate, endDate, radioDate]);
 
     const EnterKeyPress = useCallback(
         (e) => {
@@ -61,11 +76,11 @@ const SearchForm = ({ onSubmit, setDate }) => {
                     });
                     return;
                 }
-                onSubmit(query, startDate, endDate);
+                onSubmit(query, startDate, endDate, radioDate);
                 setQuery('');
             }
         },
-        [onSubmit, query, startDate, endDate]
+        [onSubmit, query, startDate, endDate, radioDate],
     );
 
     return (
@@ -74,31 +89,45 @@ const SearchForm = ({ onSubmit, setDate }) => {
                 <SearchOutlinedIcon />
                 <SearchTitle>환자번호 조회</SearchTitle>
                 <SearchInput
-                    placeholder="환자번호를 입력해주세요."
+                    placeholder='환자번호를 입력해주세요.'
                     onChange={onQueryChange}
                     onKeyDown={EnterKeyPress}
                     value={query}
                 />
 
                 <StartDate
-                    type="date"
+                    type='date'
                     value={startDate}
                     onChange={onChangeStartDate}
                 />
                 <EndDate
-                    type="date"
+                    type='date'
                     value={endDate}
                     onChange={onChangeEndDate}
                 />
+
                 <SearchSpan>접수일자</SearchSpan>
-                <SelectData type="radio" name="#" value="#" checked readOnly />
-                <SearchSpan>보고일자</SearchSpan>
-                <SelectData type="radio" name="#" value="#" />
+                <SelectData
+                    type='radio'
+                    name='radioDate'
+                    value='registerDate'
+                    onChange={onChangeRegisterDate}
+                    checked={radioDate === 'registerDate'}
+                />
+
+                <SearchSpan>오더일자</SearchSpan>
+                <SelectData
+                    type='radio'
+                    name='radioDate'
+                    value='prescribeDate'
+                    onChange={onChangeRegisterDate}
+                />
+
                 <SubmitBtn onClick={SearchButtonClick}>조회</SubmitBtn>
             </Container>
 
             <ToastContainer
-                position="top-right"
+                position='top-right'
                 autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}

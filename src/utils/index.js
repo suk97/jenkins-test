@@ -8,6 +8,10 @@ export const getRandomRGB = () => {
     return `rgb(${r}, ${g}, ${b})`;
 };
 
+export const getRandomPastelHSL = () => {
+    return `hsla(${~~(360 * Math.random())}, 70%, 70%, 1.0)`;
+};
+
 export const getDiffBetweenTwoDatesInDays = (date, compareDate) => {
     const DAY_UNIT_IN_MILLISECONDS = 24 * 3600 * 1000;
 

@@ -1,12 +1,18 @@
 import React from 'react';
 
-const ChartDataItem = ({ sampleName, figures, baseline, unit, registerDt }) => {
+const ChartDataItem = ({
+    inspectionName,
+    figures,
+    baseline,
+    unit,
+    registerDt,
+}) => {
     return (
         <>
             <tr>
-                <td>{sampleName}</td>
+                <td>{inspectionName}</td>
                 <td>
-                    {baseline} / {unit}
+                    {baseline} / {unit.trim() ? unit : <span>-</span>}
                 </td>
                 <td>{figures}</td>
 

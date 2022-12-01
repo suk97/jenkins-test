@@ -1,26 +1,9 @@
 import Types from "../../ActionConstants";
+import InitialData from "./InitialData";
 
-const initialData = {
-    prescribeInfo: {
-        loading: false,
-        data: {
-            prescribeInfo: {
-                orderCode: '',
-                prescribeDt: '',
-                doctorId: '',
-                statusName: '',
-                visitStatus: '',
-                departmentName: '',
-                inspectionCode: '',
-                sampleCode: '',
-                vesselName: '',
-                classification: ''
-            }
-        }
-    }
-}
 
-const reducer = (state = initialData, {type, payload}) => {
+
+const reducer = (state = InitialData, {type, payload}) => {
 
     switch (type) {
         case Types.GET_PRESCRIBE_INFO :

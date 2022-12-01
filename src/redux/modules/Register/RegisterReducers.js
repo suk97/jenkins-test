@@ -13,6 +13,9 @@ const initialState = {
             patientPhoneNumber: '',
             patientAddress: '',
             unsuitableReasonCode: '',
+            statusCode:'',
+            cancelBarcodeDt:'',
+            cancelCollectingDt:'',
         }
     },
     Listinfoplus: {
@@ -26,6 +29,8 @@ const initialState = {
             vesselCode:'',
             sampleCode:'',
             statusCode:'',
+            cancelBarcodeDt:'',
+            cancelCollectingDt:'',
         }
     }
 }

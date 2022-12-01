@@ -8,7 +8,3 @@ export const getPrescribe = (barcode) =>{
 export const getCollect = (barcode)=>{
     return axios.get(`${GATEWAY_URL}/data-service/collect/${barcode}`)
 }
-
-export const insertData = ()=>{
-    return axios.post(`${GATEWAY_URL}/inspection-service/insert`) //검체 접수
-}

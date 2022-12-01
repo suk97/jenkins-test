@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
-import { CategoryScale } from 'chart.js';
+import { CategoryScale, Tooltip } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
-import { getRandomRGB } from '../../utils/index';
+import { getRandomPastelHSL } from '../../utils/index';
 
-const ChartElement = ({ date, resultInfo }) => {
+const ChartElement = ({ checkedItems }) => {
     const initData = [
         {
             type: 'line',
@@ -24,15 +24,15 @@ const ChartElement = ({ date, resultInfo }) => {
 
     useEffect(() => {
         const sortData = () => {
-            if (resultInfo.data.length > 0 && resultInfo.data) {
-                const sorted = resultInfo.data.sort(
-                    (a, b) => a.registerDt - b.registerDt
+            if (checkedItems.length > 0 && checkedItems) {
+                const sorted = checkedItems.sort(
+                    (a, b) => a.registerDt - b.registerDt,
                 );
                 setChartData(createChartDatasets(sorted));
             }
         };
         sortData();
-    }, [resultInfo]);
+    }, [checkedItems]);
 
     const Initialize = () => {
         Chart.register(CategoryScale);
@@ -44,7 +44,7 @@ const ChartElement = ({ date, resultInfo }) => {
         let chartDatasets = [];
 
         for (const value of data) {
-            checkupNames.push(value.sampleName);
+            checkupNames.push(value.inspectionName);
             uniqueCheckupNames = [...new Set(checkupNames)];
         }
 
@@ -52,10 +52,11 @@ const ChartElement = ({ date, resultInfo }) => {
             chartDatasets = [
                 ...chartDatasets,
                 {
-                    type: 'line',
+                    type: 'bar',
                     label: checkupName,
-                    borderColor: getRandomRGB(),
-                    borderWidth: 2,
+                    backgroundColor: getRandomPastelHSL(),
+                    // borderColor: getRandomRGB(),
+                    // borderWidth: 2,
                     data: [],
                 },
             ];
@@ -63,11 +64,11 @@ const ChartElement = ({ date, resultInfo }) => {
 
         for (const label of uniqueCheckupNames) {
             const index = chartDatasets.findIndex(
-                (chartData) => label === chartData.label
+                (chartData) => label === chartData.label,
             );
 
             for (const checkupResult of data) {
-                if (label === checkupResult.sampleName) {
+                if (label === checkupResult.inspectionName) {
                     chartDatasets[index].data = [
                         ...chartDatasets[index].data,
                         {
@@ -84,6 +85,15 @@ const ChartElement = ({ date, resultInfo }) => {
 
     const data = {
         datasets: chartData ? chartData : initData,
+    };
+
+    Tooltip.positioners.custom = (elements, eventPositon) => {
+        // const tooltip = this;
+
+        return {
+            x: eventPositon.x,
+            y: eventPositon.y,
+        };
     };
 
     const options = {
@@ -106,6 +116,7 @@ const ChartElement = ({ date, resultInfo }) => {
                 },
             },
             tooltip: {
+                position: 'custom',
                 backgroundColor: 'rgba(124, 35, 35, 0.4)',
                 padding: 10,
                 bodySpacing: 5,
@@ -156,7 +167,7 @@ const ChartElement = ({ date, resultInfo }) => {
                 axis: 'x',
                 position: 'bottom',
                 ticks: {
-                    display: false,
+                    display: true,
                     minRotation: 0,
                     padding: 10,
                 },
@@ -207,7 +218,7 @@ const ChartElement = ({ date, resultInfo }) => {
 
     return (
         <Container>
-            <Line type="line" data={data} options={options} />
+            <Line type='line' data={data} options={options} />
         </Container>
     );
 };

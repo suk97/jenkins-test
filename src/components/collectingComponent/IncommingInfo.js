@@ -13,21 +13,21 @@ const IncommingInfo = ({info, buttonForPrescribeInfo}) => {
     //     [sampleInfo]
     // );
 
-    useEffect((e) => {
+    useEffect(() => {
 
-            const ul = document.querySelectorAll(".visit-btn");
+        const ul = document.querySelectorAll(".visit-btn");
 
-            for (let i = 0; i < ul.length; i++) {
-                ul[i].addEventListener('click', (e) => {
-                    buttonForPrescribeInfo(ul[i].getAttribute('data-key'));
-                })
-        };
-    });
+        for (let i = 0; i < ul.length; i++) {
+            ul[i].addEventListener('click', (e) => {
+                buttonForPrescribeInfo(ul[i].getAttribute('data-key'));
+            })
+        }
+        ;
+    },[info,buttonForPrescribeInfo ]);
 
 
     return (
-        <>
-            <div className={'patient-comming left'}>
+            <div className={'left-table patient-comming'}>
                 <div className={"content-title"}>
                     <AssignmentOutlinedIcon/>
                     <h3>내원 정보</h3>
@@ -40,21 +40,22 @@ const IncommingInfo = ({info, buttonForPrescribeInfo}) => {
                         <li className={"fl table-title comming-table"}>상태</li>
                     </ul>
                     {
-                        info.length > 0 ? info.map((data, index) =>
-                            // {/*FIXEME 아래는 스크롤 처리 */}
-                            (
-                                <ul className={"second-li visit-btn"} key={data?.visitCode} data-key={data?.visitCode}>
-                                    <li className={"fl comming-table"}>{data?.departmentName}</li>
-                                    <li className={"fl comming-table visit-dt"}>{data?.visitDt}</li>
-                                    <li className={"fl comming-table"}>{data?.userName}</li>
-                                    <li className={"fl comming-table"}>{data?.visitStatus}</li>
-                                </ul>
-                            )
+                        info.length > 0 ? info.map((data, index) => {
+
+                                // {/*FIXEME 아래는 스크롤 처리 */}
+                                return (
+                                    <ul className={"second-li visit-btn"} key={data?.visitCode} data-key={data?.visitCode}>
+                                        <li className={"fl comming-table"}>{data?.departmentName}</li>
+                                        <li className={"fl comming-table visit-dt"}>{data?.visitDt}</li>
+                                        <li className={"fl comming-table"}>{data?.userName}</li>
+                                        <li className={"fl comming-table"}>{data?.visitStatus}</li>
+                                    </ul>
+                                )
+                            }
                         ) : ''
                     }
                 </div>
             </div>
-        </>
     );
 }
 

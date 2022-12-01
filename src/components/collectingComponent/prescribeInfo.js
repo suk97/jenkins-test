@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useEffect, useRef, useState} from 'react'
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import "../../styles/collecting.scss";
@@ -9,10 +10,21 @@ import CancelCollectingButton from "./buttons/CancelCollectingButton";
 import CollectingButton from "./buttons/CollectingButton";
 import CancelBarcodeButton from "./buttons/CancelBarcodeButton";
 
-const PrescribeInfo = ({prescribeInfo, createBarcode, print}) => {
+let options = {
+    summaryMode: 'aggregate',
+    display: {
+        syncGridHeight: "always",
+        maxRowHeight: 30
+    },
+    grouping: {
+        enabled: false
+    }
+};
+
+const PrescribeInfo = ({prescribeInfo, visitNo, initPrescribeCodeInfo}) => {
 
     const init = useRef(null);
-    const [dataProvider, SetDataProvider] =useState();
+    const [dataProvider, SetDataProvider] = useState();
     const [gridView, setGridView] = useState();
     let dp;
     let gv;
@@ -44,15 +56,18 @@ const PrescribeInfo = ({prescribeInfo, createBarcode, print}) => {
                 <LocalHospitalOutlinedIcon/>
                 <h3>처방 정보</h3>
             </div>
-            <div
-                style={{ height: '300px', width: '770px'}}
-                id={'prescribeInfo-info'} ref={init}>
-            </div>
+                <div
+                    style={{height: '5%', width: '85%'}}
+                    id={'prescribeInfo-info'} ref={init}>
+                </div>
             <div className={'buttons'}>
-                <BarcodingButton dataProvider={dataProvider} gridView={gridView} print={print}/>
-                <CancelBarcodeButton dataProvider={dataProvider} gridView={gridView}/>
-                <CollectingButton dataProvider={dataProvider} gridView={gridView}/>
-                <CancelCollectingButton dataProvider={dataProvider} gridView={gridView}/>
+                <BarcodingButton dataProvider={dataProvider}
+                                 gridView={gridView}
+                                 visitNo={visitNo}
+                                 initPrescribeInfo={initPrescribeCodeInfo}/>
+                <CancelBarcodeButton dataProvider={dataProvider} gridView={gridView} visitNo={visitNo}/>
+                <CollectingButton dataProvider={dataProvider} gridView={gridView} visitNo={visitNo}/>
+                <CancelCollectingButton dataProvider={dataProvider} gridView={gridView} visitNo={visitNo}/>
                 <button className={'collecting-button'}>바코드 재발급</button>
             </div>
 
@@ -68,9 +83,10 @@ const PrescribeInfoItem = (gv, dp, prescribeInfo) => {
     gv.setColumns(columns);
     dp.setRows(prescribeInfo);
 
-    gv.checkBar.mergeRule="value['classification_code']";
-    gv.checkBar.width= 30;
-
+    gv.checkBar.mergeRule = "value['classification_code']";
+    gv.checkBar.width = 30;
+    gv.setOptions(options);
+    gv.displayOptions.fitStyle = "even";
 
     gv.footer.visible = false;
 

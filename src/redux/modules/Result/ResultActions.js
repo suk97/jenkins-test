@@ -2,29 +2,32 @@ import Types from '../../ActionConstants';
 import * as ResultApi from '../../../api/ResultApi';
 
 const ResultActions = {
-    getDateSearch: (patientNo, startDate, endDate) => async (dispatch) => {
-        dispatch({ type: Types.GET_RESULTS });
+    getDateSearch:
+        (patientNo, startDate, endDate, radioDate) => async (dispatch) => {
+            dispatch({ type: Types.GET_RESULTS });
 
-        try {
-            const result = await ResultApi.getResults(
-                patientNo,
-                startDate,
-                endDate
-            );
+            try {
+                const result = await ResultApi.getResults(
+                    patientNo,
+                    startDate,
+                    endDate,
+                    radioDate,
+                );
 
-            if (!result) throw new Error(`Error adding patitent: ${result}`);
+                if (!result)
+                    throw new Error(`Error adding patitent: ${result}`);
 
-            dispatch({
-                type: Types.GET_RESULTS_SUCCESS,
-                payload: result.data,
-            });
-        } catch (error) {
-            dispatch({
-                type: Types.GET_RESULTS_FAILURE,
-                payload: error.toString(),
-            });
-        }
-    },
+                dispatch({
+                    type: Types.GET_RESULTS_SUCCESS,
+                    payload: result.data,
+                });
+            } catch (error) {
+                dispatch({
+                    type: Types.GET_RESULTS_FAILURE,
+                    payload: error.toString(),
+                });
+            }
+        },
 
     getNoDateSearch: (text) => async (dispatch) => {
         dispatch({ type: Types.GET_SEARCH_RESULTS });

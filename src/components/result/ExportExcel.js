@@ -21,7 +21,6 @@ const ExportExcel = ({ csvData, fileName }) => {
             baseline: '참고치',
             unit: '단위',
             note: '비고',
-            sampleNote: '검체비고',
         },
     ];
 
@@ -40,7 +39,6 @@ const ExportExcel = ({ csvData, fileName }) => {
                 'baseline',
                 'unit',
                 'note',
-                'sampleNote',
             ],
             skipHeader: true,
             origin: 0,
@@ -60,7 +58,6 @@ const ExportExcel = ({ csvData, fileName }) => {
                 'baseline',
                 'unit',
                 'note',
-                'sampleNote',
             ],
             skipHeader: true,
             origin: -1,
@@ -73,7 +70,7 @@ const ExportExcel = ({ csvData, fileName }) => {
 
     return (
         <button
-            variant="warning"
+            variant='warning'
             onClick={(e) => exportToCSV(csvData, fileName)}
         >
             Export XLSX

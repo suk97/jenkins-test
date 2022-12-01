@@ -32,8 +32,6 @@ const SampleList = ({sampleInfo}) => {
                     }
                 </tbody>
             </table>
-            {sampleInfo.data.message && 
-                <p className="message">{sampleInfo.data.message}</p>}
          </>
     )
 }

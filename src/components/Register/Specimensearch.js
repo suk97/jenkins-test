@@ -7,9 +7,9 @@ const Specimensearch = ({onSubmit}) => {
 
     const [query, setQuery] = useState('');
 
-    const onQueryChange = useCallback((e) => {
+    const onQueryChange =(e) => {
         setQuery(e.target.value);
-    }, []);
+    };
 
     const SearchButtonClick = useCallback(() => {
         onSubmit(query);

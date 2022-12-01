@@ -2,23 +2,31 @@ import React from "react";
 import GetCheckedRow from "./GetCheckRow";
 import {useDispatch} from "react-redux";
 import BarcodeActions from "../../../redux/modules/Collecting/BarcodeActions";
+// import Swal from "sweetalert2";
+import SAlert from "./SAlert";
 
-const prescribeCode = {
+let prescribeCode = {
     prescribeCodeList: []
 }
 const CancelBarcodeButton = ({dataProvider,gridView})=>{
 
     const dispatch = useDispatch();
-
+    let index = 0;
     const click = ()=>{
         gridView.commit();
         const checkedRow = GetCheckedRow(gridView ,dataProvider);
 
-        let rows = dataProvider.getJsonRows();
+        if(checkedRow.length === 0){
+            SAlert("처방을 선택해 주세요!", "", "error");
+            return null;
+        }
+
+        let rows = dataProvider.getJsonRowwes();
 
         for (let i = 0; i < rows.length; i++) {
             if(rows[checkedRow[i]] !== undefined){
-                prescribeCode.prescribeCodeList[i] = rows[checkedRow[i]]?.prescribe_code;
+                prescribeCode.prescribeCodeList[index] = rows[checkedRow[i]]?.prescribe_code;
+                index++;
             }
         }
 
@@ -26,7 +34,8 @@ const CancelBarcodeButton = ({dataProvider,gridView})=>{
         dispatch(BarcodeActions.forCancelData(prescribeCode));
         gridView.resetCheckables(false);
 
-        alert("바코드 출력이 취소 되었습니다!");
+        SAlert('바코드출력이 취소되었습니다!','','success');
+        prescribeCode.prescribeCodeList = [];
     }
     return (
 

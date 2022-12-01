@@ -3,6 +3,9 @@ import logo from '../assets/images/DOUZONE_CI_RGB.png';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 export const Header = () => {
+  const onClick=()=>{
+    window.localStorage.removeItem("AccessToken");
+  }
     return (
         <header>
              <div>
@@ -11,7 +14,7 @@ export const Header = () => {
                 </h1>
                  <div className='logout_wrap'>
                   <p>Logout</p>
-                  <LogoutOutlinedIcon />
+                  <a href='/' onClick={onClick}><LogoutOutlinedIcon /></a>
                 </div>
             </div>
         </header>

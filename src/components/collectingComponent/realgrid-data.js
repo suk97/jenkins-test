@@ -44,7 +44,7 @@ export const columns = [
     {
         name: "Bool",
         fieldName: "Bool",
-        width: "30",
+        width: "25",
         editable: false,
         renderer: {
             type: "check"
@@ -57,7 +57,7 @@ export const columns = [
         name: "prescribe_code",
         fieldName: "prescribe_code",
         type: "data",
-        width: "65",
+        width: "58",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -65,24 +65,25 @@ export const columns = [
         header: {
             text: "처방코드",
         }
-    }, {
-        name: "visit_status",
-        fieldName: "visit_status",
-        type: "data",
-        width: "65",
-        editable: false,
-        styles: {
-            textAlignment: "center"
-        },
-        header: {
-            text: "방문상태"
-        },
     },
+    // {
+    //     name: "visit_status",
+    //     fieldName: "visit_status",
+    //     type: "data",
+    //     width: "55",
+    //     editable: false,
+    //     styles: {
+    //         textAlignment: "center"
+    //     },
+    //     header: {
+    //         text: "방문상태"
+    //     },
+    // },
     {
         name: "prescribe_dt",
         fieldName: "prescribe_dt",
         type: "data",
-        width: "90",
+        width: "88",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -95,7 +96,7 @@ export const columns = [
         name: "status_name",
         fieldName: "status_name",
         type: "data",
-        width: "80",
+        width: "90",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -108,7 +109,7 @@ export const columns = [
         name: "user_name",
         fieldName: "user_name",
         type: "data",
-        width: "60",
+        width: "50",
         editable: false,
         styles: {
             "textAlignment": "center"
@@ -118,7 +119,7 @@ export const columns = [
         name: "order_code",
         fieldName: "order_code",
         type: "data",
-        width: "90",
+        width: "80",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -134,7 +135,7 @@ export const columns = [
         name: "department_name",
         fieldName: "department_name",
         type: "data",
-        width: "75",
+        width: "65",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -146,7 +147,7 @@ export const columns = [
         name: "sample_code",
         fieldName: "sample_code",
         type: "data",
-        width: "65",
+        width: "60",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -159,7 +160,7 @@ export const columns = [
         name: "vessel_code",
         fieldName: "vessel_code",
         type: "data",
-        width: "65",
+        width: "55",
         editable: false,
         styles: {
             textAlignment: "center"
@@ -171,7 +172,7 @@ export const columns = [
         name: "classification_code",
         fieldName: "classification_code",
         type: "data",
-        width: "55",
+        width: "40",
         editable: false,
         styles: {
             textAlignment: "center"

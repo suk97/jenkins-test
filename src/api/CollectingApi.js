@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const findPatientInfo = (data) => {
-    return axios.get('http://localhost:8000/data-service/patient/' + data);
+export const findPatientInfo = (data, visitStatus) => {
+    return axios.get('http://localhost:8000/data-service/patient/info/' + data + '/' + visitStatus);
 }
 
 export const findPrescribeInfo = (data) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import ChartDataItem from './ChartDataItem';
 
-const ChartDataList = ({ resultInfo }) => {
+const ChartDataList = ({ checkedItems }) => {
     return (
         <table>
             <tbody>
@@ -12,12 +12,12 @@ const ChartDataList = ({ resultInfo }) => {
                     <th>검사일</th>
                 </tr>
 
-                {resultInfo?.data?.length > 0 &&
-                    resultInfo.data.map((data, index) => {
+                {checkedItems.length > 0 &&
+                    checkedItems.map((data, index) => {
                         return (
                             <ChartDataItem
                                 key={index}
-                                sampleName={data.sampleName}
+                                inspectionName={data.inspectionName}
                                 figures={data.figures}
                                 baseline={data.baseline}
                                 unit={data.unit}

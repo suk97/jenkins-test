@@ -1,37 +1,45 @@
-import React from "react";
+import React, {useEffect} from "react";
 import GetCheckedRow from "./GetCheckRow";
 import {useDispatch} from "react-redux";
 import CollectingActions from "../../../redux/modules/Collecting/CollectingActions";
+import SAlert from "./SAlert";
 
-const prescribeCode = {
+let prescribeCode = {
     prescribeCodeList: []
 }
 const CollectingButton = ({dataProvider, gridView})=>{
 
+    let index=0;
+
     const dispatch = useDispatch();
-    const click = async () => {
+
+    useEffect(() => {
+
+    }, [dataProvider]);
+
+    const click = () => {
 
         gridView.commit();
         let checkedRow = GetCheckedRow(gridView, dataProvider);
 
-        if(checkedRow[0] === undefined){
-            alert("처방을 선택해주세요!");
+        if(checkedRow.length === 0){
+            SAlert("처방을 선택해 주세요!", "", "error");
             return null;
         }
 
-        console.log(checkedRow);
-
         let rows = dataProvider.getJsonRows();
 
-        for (let i = 0; i < rows.length; i++) {
+        for (let i = 0; i < checkedRow.length; i++) {
             if(rows[checkedRow[i]] !== undefined){
-                prescribeCode.prescribeCodeList[i] = rows[checkedRow[i]]?.prescribe_code;
+                prescribeCode.prescribeCodeList[index] = rows[checkedRow[i]]?.prescribe_code;
+                index++;
             }
         }
 
         dispatch(CollectingActions.putCollectingData(prescribeCode));
         gridView.resetCheckables(true);
-        alert("채혈등록이 되었습니다");
+        SAlert('채혈 등록이 완료되었습니다!','','success');
+        prescribeCode.prescribeCodeList = [];
     }
 
     return (

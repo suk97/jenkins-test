@@ -10,8 +10,6 @@ COPY . /usr/src/app
 
 RUN npm install
 
-RUN node --max-old-space-size=4096 app.js
-
 RUN npm run build
 
 RUN npm insatll -g serve

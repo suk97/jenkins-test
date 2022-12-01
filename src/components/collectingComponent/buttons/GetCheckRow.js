@@ -28,9 +28,10 @@ function GetCheckedRow(gridView, dataProvider) {
                 console.log("여깁니다2!")
                 console.log(boolCheck[i] === false);
                 checkedRow[index] = i;
+                index++;
             }
         }
-        index++;
+
     }
 
     return checkedRow;

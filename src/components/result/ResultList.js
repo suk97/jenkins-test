@@ -1,78 +1,148 @@
-import ResultItem from './ResultItem';
-import ResultModal from './ResultModal';
-import React, { useState } from 'react';
+/* eslint-disable */
+import React, { useEffect, useState } from 'react';
+import { GoArrowUp, GoArrowDown } from 'react-icons/go';
+import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 
-const ResultList = ({ resultInfo }) => {
-    const [modalOpen, setModalOpen] = useState(false);
-    const openModal = () => {
-        setModalOpen(true);
+const ResultList = ({ resultInfo, checkedItems, setCheckedItems }) => {
+    const handleSingleCheck = (checked, resultNo) => {
+        if (checked) {
+            setCheckedItems((checkedItems) => [...checkedItems, resultNo]);
+        } else {
+            setCheckedItems(checkedItems.filter((del) => del !== resultNo));
+        }
     };
 
-    const closeModal = () => {
-        setModalOpen(false);
+    const sortType = {
+        registerDt: '접수일',
+        sampleName: '검체명',
+        prescribeDt: '오더일',
+        inspectionName: '검사명',
+        figures: '수치',
+    };
+
+    const [sortInfo, setSortInfo] = useState({});
+    const [sortedData, setSortedData] = useState([]);
+
+    const initialize = () => {
+        setSortInfo({
+            registerDt: 'asc',
+            sampleName: 'asc',
+            prescribeDt: 'asc',
+            inspectionName: 'asc',
+            figures: 'asc',
+        });
+    };
+
+    useEffect(() => {
+        initialize();
+    }, []);
+
+    const sortData = (type) => {
+        const sorted = resultInfo.data.sort((a, b) => {
+            if (typeof a[type] === 'string') {
+                return sortInfo[type] === 'asc'
+                    ? b[type].localeCompare(a[type])
+                    : a[type].localeCompare(b[type]);
+            } else {
+                return sortInfo[type] === 'asc'
+                    ? b[type] - a[type]
+                    : a[type] - b[type];
+            }
+        });
+
+        setSortedData({ documents: sorted });
     };
 
     return (
         <>
-            {/* {resultInfo?.data?.length > 0 &&
-                resultInfo.data.map((data, index) => {
-                    return (
-                        <ResultModal
-                            key={index}
-                            open={modalOpen}
-                            close={closeModal}
-                            patientName={data.patientName}
-                            patientNo={data.patientNo}
-                            patientPhoneNumber={data.patientPhoneNumber}
-                        />
-                    );
-                })}  리팩토링때 수정예정 221124 */}
-
-            <ResultModal
-                open={modalOpen}
-                close={closeModal}
-                // patientName={respatientName}
-                // patientNo={patientNo}
-                // patientPhoneNumber={patientPhoneNumber}
-            />
-
             <table>
                 <tbody>
                     <tr>
                         <th> </th>
-                        <th>접수일</th>
-                        <th>검체명</th>
-                        <th>오더일</th>
-                        <th>검사명</th>
-                        <th>수치</th>
+                        {Object.entries(sortType).map(([key, value]) => {
+                            return (
+                                <th
+                                    key={key}
+                                    onClick={(e) => {
+                                        const sortOrder =
+                                            sortInfo[key] === 'asc'
+                                                ? 'desc'
+                                                : 'asc';
+
+                                        setSortInfo({
+                                            [key]: sortOrder,
+                                        });
+
+                                        sortData(key);
+                                    }}
+                                >
+                                    {value}{' '}
+                                    {sortInfo[key] === 'asc' ? (
+                                        <ArrowDropUpOutlinedIcon className='dropArrow' />
+                                    ) : sortInfo[key] === 'desc' ? (
+                                        <ArrowDropDownOutlinedIcon className='dropArrow' />
+                                    ) : null}
+                                </th>
+                            );
+                        })}
                         <th>참고치/단위</th>
                         <th>HL</th>
                         <th>비고</th>
-                        <th>검체비고</th>
-                        <th>결과발송</th>
                     </tr>
 
                     {resultInfo?.data?.length > 0 &&
-                        resultInfo.data.map((data, index) => {
+                        resultInfo.data.map((data, key) => {
                             return (
-                                <ResultItem
-                                    key={index}
-                                    registerDt={data.registerDt}
-                                    sampleName={data.sampleName}
-                                    prescribeDt={data.prescribeDt}
-                                    inspectionName={data.inspectionName}
-                                    figures={data.figures}
-                                    baseline={data.baseline}
-                                    unit={data.unit}
-                                    note={data.note}
-                                    sampleNote={data.sampleNote}
-                                    resultInfo={resultInfo}
-                                    patientNo={data.patientNo}
-                                    patientName={data.patientName}
-                                    patientPhoneNumber={data.patientPhoneNumber}
-                                    openModal={openModal}
-                                    data={data}
-                                />
+                                <tr key={key}>
+                                    <td>
+                                        <input
+                                            type='checkbox'
+                                            onChange={(e) =>
+                                                handleSingleCheck(
+                                                    e.target.checked,
+                                                    resultInfo.data[key],
+                                                )
+                                            }
+                                            checked={
+                                                checkedItems.includes(
+                                                    resultInfo.data[key],
+                                                )
+                                                    ? true
+                                                    : false
+                                            }
+                                        />
+                                    </td>
+                                    <td>{data.registerDt}</td>
+                                    <td>{data.sampleName}</td>
+                                    <td>{data.prescribeDt}</td>
+                                    <td>{data.inspectionName}</td>
+                                    <td>{data.figures}</td>
+                                    <td>
+                                        {data.baseline} /{' '}
+                                        {data.unit.trim() ? (
+                                            data.unit
+                                        ) : (
+                                            <span>-</span>
+                                        )}
+                                    </td>
+                                    <td>
+                                        {data.figures > data.baseline ? (
+                                            <GoArrowUp className='arrow-up' />
+                                        ) : data.figures === data.baseline ? (
+                                            <span>=</span>
+                                        ) : (
+                                            <GoArrowDown className='arrow-down' />
+                                        )}
+                                    </td>
+                                    <td>
+                                        {data.note ? data.note : <span>-</span>}
+                                    </td>
+
+                                    <td className='note-text'>
+                                        {data.note ? data.note : <span>-</span>}
+                                    </td>
+                                </tr>
                             );
                         })}
                 </tbody>

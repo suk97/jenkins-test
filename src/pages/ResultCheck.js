@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ExportExcel from '../components/result/ExportExcel';
@@ -13,33 +14,47 @@ import ChartElement from '../components/result/ChartElement';
 import ChartDataList from '../components/result/ChartDataList';
 import ExportCSV from '../components/result/ExportCSV';
 import DefaultData from '../components/result/DefaultData';
+import ChartDefaultData from '../components/result/ChartDefaultData';
+import ResultModal from '../components/result/ResultModal';
 
 const ResultCheck = () => {
     const { resultInfo } = useSelector((state) => state.ResultInfo);
     const dispatch = useDispatch();
     const [date, setDate] = useState();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [checkedItems, setCheckedItems] = useState([]);
 
-    const onSubmit = async (query, target, startDate, endDate) => {
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const onSubmit = async (query, target, startDate, endDate, radioDate) => {
         if (startDate === '') {
             dispatch(ResultActions.getNoDateSearch(query));
         } else {
-            (endDate === endDate && startDate === '')
+            endDate && startDate === ''
                 ? dispatch(ResultActions.getNoDateSearch(query))
                 : dispatch(
                       ResultActions.getDateSearch(
                           query,
                           target,
                           startDate,
-                          endDate
-                      )
+                          endDate,
+                          radioDate,
+                      ),
                   );
         }
     };
 
     return (
-        <div className="wrap">
-            <div className="max-wrap">
-                <div className="title-wrap">
+        <div className='wrap'>
+            <ResultModal open={modalOpen} close={closeModal} />
+            <div className='max-wrap'>
+                <div className='title-wrap'>
                     <ContentPasteSearchOutlinedIcon />
                     <h2>
                         검사결과 조회 <span>Inspection result inquiry</span>
@@ -48,11 +63,11 @@ const ResultCheck = () => {
 
                 <SearchForm onSubmit={onSubmit} setDate={setDate} />
 
-                <div className="result-wrap">
-                    <div className="con-title">
+                <div className='result-wrap'>
+                    <div className='con-title'>
                         <TextSnippetOutlinedIcon />
                         <p>검사결과</p>
-                        <div className="export-btn-wrap">
+                        <div className='export-btn-wrap'>
                             <ExportCSV
                                 csvData={
                                     resultInfo.data.length > 0
@@ -67,15 +82,24 @@ const ResultCheck = () => {
                                         ? resultInfo.data
                                         : []
                                 }
-                                fileName="Customers_Infomation_xlsx"
+                                fileName='Customers_Infomation_xlsx'
                             />
+                            <button
+                                key={resultInfo.index}
+                                className='sms-btn'
+                                onClick={openModal}
+                            >
+                                SMS 발송
+                            </button>
                         </div>
                     </div>
-                    <div className="scroll-wrap">
+                    <div className='scroll-wrap'>
                         {resultInfo.data.length > 0 ? (
                             <ResultList
                                 resultInfo={resultInfo}
                                 patientName={resultInfo.data.patientName}
+                                checkedItems={checkedItems}
+                                setCheckedItems={setCheckedItems}
                             />
                         ) : (
                             <DefaultData />
@@ -83,28 +107,31 @@ const ResultCheck = () => {
                     </div>
                 </div>
 
-                <div className="chart-wrap">
-                    <div className="chart chart-line">
-                        <div className="con-title">
+                <div className='chart-wrap'>
+                    <div className='chart chart-line'>
+                        <div className='con-title'>
                             <TimelineOutlinedIcon />
                             <p>결과차트</p>
                         </div>
-                        {resultInfo.data.length > 0 ? (
-                            <ChartElement resultInfo={resultInfo} date={date} />
+                        {checkedItems.length > 0 ? (
+                            <ChartElement
+                                checkedItems={checkedItems}
+                                date={date}
+                            />
                         ) : (
-                            <DefaultData />
+                            <ChartDefaultData />
                         )}
                     </div>
-                    <div className="chart chart-data">
-                        <div className="con-title">
+                    <div className='chart chart-data'>
+                        <div className='con-title'>
                             <InsertChartOutlinedIcon />
                             <p>결과차트 데이터</p>
                         </div>
-                        <div className="scroll-wrap">
-                            {resultInfo.data.length > 0 ? (
-                                <ChartDataList resultInfo={resultInfo} />
+                        <div className='scroll-wrap'>
+                            {checkedItems.length > 0 ? (
+                                <ChartDataList checkedItems={checkedItems} />
                             ) : (
-                                <DefaultData />
+                                <ChartDefaultData />
                             )}
                         </div>
                     </div>
