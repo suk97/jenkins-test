@@ -4,7 +4,6 @@ FROM    node:16-alpine
 # 2. 패키지 우선 복사
 COPY    ./package* /usr/src/app/
 WORKDIR /usr/src/app
-
 # 3. 소스 복사
 COPY . /usr/src/app
 RUN npm install
