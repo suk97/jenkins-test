@@ -6,6 +6,9 @@ COPY    ./package* /usr/src/app/
 WORKDIR /usr/src/app
 # 3. 소스 복사
 COPY . /usr/src/app
+
+ENV NODE_OPTIONS="--max-old-space-size=8192"
+
 RUN npm install
 RUN npm run build
 RUN npx install -g serve
