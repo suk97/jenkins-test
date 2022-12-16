@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('prepare') {
             steps {
-                echo 'prepare'
-                 git branch: "${BRANCH}", credentialsId: "jenkins-git-credential", url: 'https://github.com/Laboratory-Information-System-Project/lis-front.git'
-                 sh  'ls -al'
+                git url: 'https://github.com/Laboratory-Information-System-Project/gatewayService.git',
+                    branch: 'develop',
+                    credentialsId: 'data-service'
             }
         }
         stage('build') {
