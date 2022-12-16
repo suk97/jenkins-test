@@ -2,11 +2,13 @@ pipeline {
     agent any
     tools {nodejs "nodejs"} // npm 명령어 사용을 위한 nodejs
     stages {
-        steps {
+        stage('prepare') {
+           steps {
                 git url: 'https://github.com/suk97/jenkins-test.git',
                     branch: 'main',
                     credentialsId: 'jenkins-git-credential'
             }
+        }
         stage('build') {
             steps {
                     sh 'ls -al'
