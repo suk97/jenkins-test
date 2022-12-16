@@ -7,6 +7,7 @@ pipeline {
                 git url: 'https://github.com/Laboratory-Information-System-Project/gatewayService.git',
                     branch: 'develop',
                     credentialsId: 'data-service'
+                    
             }
         }
         stage('build') {
